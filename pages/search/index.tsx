@@ -30,7 +30,6 @@ export default function Search({ app }: { app: AppMeta }) {
         search: q,
         page: _page,
         limit: 100,
-        format: "text",
       });
       setArticles(articles);
       setTotal(total);
@@ -39,46 +38,48 @@ export default function Search({ app }: { app: AppMeta }) {
   }, [q, _page, router]);
 
   return (
-    <Layout app={app} containerStyle={{ flex: 1, display: "flex" }}>
+    <Layout app={app}>
       <Head>
         <title>{app?.name || app?.uid || ""}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {articles.length > 0 ? (
-        <div className={styles.Search}>
-          <p className={styles.Search_Text}>
-            Found {total} results for your search
-          </p>
-          <div className={styles.Search_Results}>
-            {articles.map((article) => (
-              <article key={article._id} className={styles.Article}>
-                <Link href={`/article/${article.slug}`}>
-                  <a href="#" className={styles.Article_Link}>
-                    <h1 className={styles.Article_Title}>{article.title}</h1>
-                    <p className={styles.Article_Description}>
-                      {htmlToText(article.body, {
-                        selectors: [{ selector: "img", format: "skip" }],
-                      })}
-                    </p>
-                  </a>
-                </Link>
-              </article>
-            ))}
-          </div>
-        </div>
-      ) : (
-        isLoading && (
-          <div className={styles.Empty}>
-            <div className={styles.Empty_Emoji}>😵</div>
-            <h1 className={styles.Empty_Title}>Nothing found</h1>
-            <p className={styles.Empty_Description}>
-              Sorry, but nothing matched search terms…
-              <br />
-              Please try again with different keywords!
+      <main className={styles.Container}>
+        {articles.length > 0 ? (
+          <div className={styles.Search}>
+            <p className={styles.Search_Text}>
+              Found {total} results for your search
             </p>
+            <div className={styles.Search_Results}>
+              {articles.map((article) => (
+                <article key={article._id} className={styles.Article}>
+                  <Link href={`/article/${article.slug}`}>
+                    <a href="#" className={styles.Article_Link}>
+                      <h1 className={styles.Article_Title}>{article.title}</h1>
+                      <p className={styles.Article_Description}>
+                        {htmlToText(article.body, {
+                          selectors: [{ selector: "img", format: "skip" }],
+                        })}
+                      </p>
+                    </a>
+                  </Link>
+                </article>
+              ))}
+            </div>
           </div>
-        )
-      )}
+        ) : (
+          isLoading && (
+            <div className={styles.Empty}>
+              <div className={styles.Empty_Emoji}>😵</div>
+              <h1 className={styles.Empty_Title}>Nothing found</h1>
+              <p className={styles.Empty_Description}>
+                Sorry, but nothing matched search terms…
+                <br />
+                Please try again with different keywords!
+              </p>
+            </div>
+          )
+        )}
+      </main>
     </Layout>
   );
 }
