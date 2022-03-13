@@ -1,12 +1,11 @@
-import { Home, HomeProps } from "../../components/Home";
 import {
   fetchApp,
   fetchArchives,
   fetchArticles,
   fetchAuthors,
   fetchTags,
-  getPages,
-} from "../../lib/api";
+} from "../../../lib/api";
+import { Home, HomeProps } from "../../../components/Home";
 
 export default function TopPage(props: HomeProps) {
   return <Home {...props} />;
@@ -15,16 +14,21 @@ export default function TopPage(props: HomeProps) {
 export async function getStaticProps({
   params,
 }: {
-  params: { page: string };
+  params: { slug: string };
 }): Promise<{ props: HomeProps }> {
-  const page = Number(params.page) || 1;
+  const { slug } = params;
   const app = await fetchApp();
   const { tags } = await fetchTags();
   const { authors } = await fetchAuthors();
   const { archives } = await fetchArchives();
-  const { articles, total } = await fetchArticles({
-    page,
-  });
+
+  const author = authors.find((author) => author.slug === slug);
+  const { articles, total } = author
+    ? await fetchArticles({
+        author: author._id,
+      })
+    : { articles: [], total: 0 };
+
   return {
     props: {
       app,
@@ -33,17 +37,17 @@ export async function getStaticProps({
       archives,
       articles,
       total,
-      page,
+      authorSlug: slug,
     },
   };
 }
 
 export async function getStaticPaths() {
-  const pages = await getPages();
+  const { authors } = await fetchAuthors();
   return {
-    paths: pages.map((page) => ({
+    paths: authors.map((author) => ({
       params: {
-        page: page.number.toString(),
+        slug: author.slug,
       },
     })),
     fallback: "blocking",

@@ -1,9 +1,9 @@
 {
-  "name": "newt-blog-starter-nextjs",
+  "name": "newt-blog2-starter-nextjs",
   "version": "1.0.0",
   "private": false,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3001",
     "build": "next build",
     "start": "next start"
   },

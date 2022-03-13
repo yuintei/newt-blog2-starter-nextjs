@@ -1,6 +1,7 @@
 import { Content, createClient } from "newt-client-js";
-import { Article } from "../types/article";
-import { Category } from "../types/category";
+import { Archive, Article } from "../types/article";
+import { Author } from "../types/author";
+import { Tag } from "../types/tag";
 
 const client = createClient({
   spaceUid: process.env.NEXT_PUBLIC_NEWT_SPACE_UID,
@@ -15,26 +16,47 @@ export const fetchApp = async () => {
   return app;
 };
 
-export const fetchCategories = async () => {
-  const { items } = await client.getContents<Content & Category>({
+export const fetchTags = async () => {
+  const { items, total } = await client.getContents<Content & Tag>({
     appUid: process.env.NEXT_PUBLIC_NEWT_APP_UID,
-    modelUid: process.env.NEXT_PUBLIC_NEWT_CATEGORY_MODEL_UID,
+    modelUid: process.env.NEXT_PUBLIC_NEWT_TAG_MODEL_UID,
     query: {
       depth: 1,
     },
   });
-  return items;
+
+  const tags: (Content & Tag & { total: number })[] = [];
+
+  // Get the number of articles per tag
+  await items.reduce(async (prevPromise, tag) => {
+    await prevPromise;
+    const { total } = await client.getContents({
+      appUid: process.env.NEXT_PUBLIC_NEWT_APP_UID,
+      modelUid: process.env.NEXT_PUBLIC_NEWT_ARTICLE_MODEL_UID,
+      query: {
+        tags: tag._id,
+        select: ["slug"],
+      },
+    });
+    tags.push({ ...tag, total });
+  }, Promise.resolve());
+
+  return {
+    tags,
+    total,
+  };
 };
 
 export const fetchArticles = async (options?: {
   query?: Record<string, any>;
   search?: string;
-  category?: string;
+  tag?: string;
+  author?: string;
+  year?: number;
   page?: number;
   limit?: number;
-  format?: string;
 }) => {
-  const { query, search, category, page, limit, format } = options || {};
+  const { query, search, tag, author, year, page, limit } = options || {};
   const _query = {
     ...(query || {}),
   };
@@ -52,8 +74,17 @@ export const fetchArticles = async (options?: {
       },
     ];
   }
-  if (category) {
-    _query.categories = category;
+  if (tag) {
+    _query.tags = tag;
+  }
+  if (author) {
+    _query.author = author;
+  }
+  if (year) {
+    _query["_sys.createdAt"] = {
+      gte: new Date(year.toString()).toISOString(),
+      lt: new Date((year + 1).toString()).toISOString(),
+    };
   }
   const _page = page || 1;
   const _limit = limit || Number(process.env.NEXT_PUBLIC_PAGE_LIMIT) || 10;
@@ -69,13 +100,18 @@ export const fetchArticles = async (options?: {
       ..._query,
     },
   });
+
   return {
     articles: items,
     total,
   };
 };
 
-export const getPages = async (options?: { category?: string }) => {
+export const getPages = async (options?: {
+  tag?: string;
+  author?: string;
+  year?: number;
+}) => {
   const { total } = await fetchArticles(options);
   const pages = Array(
     Math.ceil(total / Number(process.env.NEXT_PUBLIC_PAGE_LIMIT) || 10)
@@ -90,7 +126,7 @@ export const getPages = async (options?: { category?: string }) => {
 export const fetchCurrentArticle = async (options: { slug: string }) => {
   const { slug } = options;
   if (!slug) return null;
-  const { items } = await client.getContents({
+  const { items } = await client.getContents<Content & Article>({
     appUid: process.env.NEXT_PUBLIC_NEWT_APP_UID,
     modelUid: process.env.NEXT_PUBLIC_NEWT_ARTICLE_MODEL_UID,
     query: {
@@ -100,4 +136,124 @@ export const fetchCurrentArticle = async (options: { slug: string }) => {
     },
   });
   return items[0] || null;
+};
+
+export const fetchPreviousArticle = async (options: {
+  createdAt: string;
+}): Promise<(Content & Article) | null> => {
+  const { createdAt } = options;
+  const { items } = await client.getContents<Content & Article>({
+    appUid: process.env.NEXT_PUBLIC_NEWT_APP_UID,
+    modelUid: process.env.NEXT_PUBLIC_NEWT_ARTICLE_MODEL_UID,
+    query: {
+      depth: 1,
+      limit: 1,
+      select: ["slug"],
+      order: ["-_sys.createdAt"],
+      "_sys.createdAt": {
+        lt: createdAt,
+      },
+    },
+  });
+  return items.length === 1 ? items[0] : null;
+};
+
+export const fetchNextArticle = async (options: {
+  createdAt: string;
+}): Promise<(Content & Article) | null> => {
+  const { createdAt } = options;
+  const { items } = await client.getContents<Content & Article>({
+    appUid: process.env.NEXT_PUBLIC_NEWT_APP_UID,
+    modelUid: process.env.NEXT_PUBLIC_NEWT_ARTICLE_MODEL_UID,
+    query: {
+      depth: 1,
+      limit: 1,
+      select: ["slug"],
+      order: ["_sys.createdAt"],
+      "_sys.createdAt": {
+        gt: createdAt,
+      },
+    },
+  });
+  return items.length === 1 ? items[0] : null;
+};
+
+export const fetchAuthors = async () => {
+  const { items, total } = await client.getContents<Content & Author>({
+    appUid: process.env.NEXT_PUBLIC_NEWT_APP_UID,
+    modelUid: process.env.NEXT_PUBLIC_NEWT_AUTHOR_MODEL_UID,
+    query: {
+      depth: 1,
+    },
+  });
+  const authors: (Content & Author & { total: number })[] = [];
+
+  // Get the number of articles per tag
+  await items.reduce(async (prevPromise, author) => {
+    await prevPromise;
+    const { total } = await client.getContents({
+      appUid: process.env.NEXT_PUBLIC_NEWT_APP_UID,
+      modelUid: process.env.NEXT_PUBLIC_NEWT_ARTICLE_MODEL_UID,
+      query: {
+        author: author._id,
+        select: ["slug"],
+      },
+    });
+    authors.push({ ...author, total });
+  }, Promise.resolve());
+
+  return {
+    authors,
+    total,
+  };
+};
+
+export const fetchArchives = async () => {
+  const archives: Archive[] = [];
+  const { items } = await client.getContents<Content & Article>({
+    appUid: process.env.NEXT_PUBLIC_NEWT_APP_UID,
+    modelUid: process.env.NEXT_PUBLIC_NEWT_ARTICLE_MODEL_UID,
+    query: {
+      depth: 1,
+      limit: 1,
+      order: ["_sys.createdAt"],
+      select: ["slug", "_sys.createdAt"],
+    },
+  });
+  const oldestArticle = items[0] || null;
+  if (!oldestArticle) return { archives };
+
+  let currentYear = new Date(
+    (oldestArticle && oldestArticle._sys.createdAt) || new Date()
+  ).getFullYear();
+  const thisYear = new Date().getFullYear();
+
+  while (currentYear <= thisYear) {
+    archives.splice(0, 0, {
+      year: currentYear,
+      count: 0,
+    });
+    currentYear++;
+  }
+  await archives.reduce(async (prevPromise, archive) => {
+    await prevPromise;
+    const { total } = await client.getContents({
+      appUid: process.env.NEXT_PUBLIC_NEWT_APP_UID,
+      modelUid: process.env.NEXT_PUBLIC_NEWT_ARTICLE_MODEL_UID,
+      query: {
+        depth: 1,
+        limit: 1,
+        select: ["slug"],
+        "_sys.createdAt": {
+          gte: new Date(archive.year.toString()).toISOString(),
+          lt: new Date((archive.year + 1).toString()).toISOString(),
+        },
+      },
+    });
+    archive.count = total;
+  }, Promise.resolve());
+
+  return {
+    archives,
+  };
 };

@@ -1,12 +1,11 @@
-import { Home, HomeProps } from "../../components/Home";
 import {
   fetchApp,
   fetchArchives,
   fetchArticles,
   fetchAuthors,
   fetchTags,
-  getPages,
-} from "../../lib/api";
+} from "../../../lib/api";
+import { Home, HomeProps } from "../../../components/Home";
 
 export default function TopPage(props: HomeProps) {
   return <Home {...props} />;
@@ -15,16 +14,23 @@ export default function TopPage(props: HomeProps) {
 export async function getStaticProps({
   params,
 }: {
-  params: { page: string };
+  params: { slug: string };
+  redirect;
 }): Promise<{ props: HomeProps }> {
-  const page = Number(params.page) || 1;
+  const { slug } = params;
   const app = await fetchApp();
   const { tags } = await fetchTags();
   const { authors } = await fetchAuthors();
   const { archives } = await fetchArchives();
+
+  let year = Number(slug);
+  if (Number.isNaN(year)) {
+    year = new Date().getFullYear();
+  }
   const { articles, total } = await fetchArticles({
-    page,
+    year,
   });
+
   return {
     props: {
       app,
@@ -33,17 +39,17 @@ export async function getStaticProps({
       archives,
       articles,
       total,
-      page,
+      year,
     },
   };
 }
 
 export async function getStaticPaths() {
-  const pages = await getPages();
+  const { archives } = await fetchArchives();
   return {
-    paths: pages.map((page) => ({
+    paths: archives.map((archive) => ({
       params: {
-        page: page.number.toString(),
+        slug: archive.year.toString(),
       },
     })),
     fallback: "blocking",

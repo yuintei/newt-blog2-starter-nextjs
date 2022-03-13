@@ -1,6 +1,6 @@
 import { Content } from "newt-client-js";
 import { Author } from "./author";
-import { Category } from "./category";
+import { Tag } from "./tag";
 
 export interface Article {
   title: string;
@@ -13,5 +13,7 @@ export interface Article {
   body: string;
   coverImage: { src: string } | null;
   author: (Content & Author) | null;
-  categories: (Content & Category)[];
+  tags: (Content & Tag)[];
 }
+
+export type Archive = { year: number; count: number };

@@ -1,5 +1,11 @@
 import { Home, HomeProps } from "../../../components/Home";
-import { fetchApp, fetchArticles, fetchCategories } from "../../../lib/api";
+import {
+  fetchApp,
+  fetchArchives,
+  fetchArticles,
+  fetchAuthors,
+  fetchTags,
+} from "../../../lib/api";
 
 export default function CategoryPage(props: HomeProps) {
   return <Home {...props} />;
@@ -12,29 +18,33 @@ export async function getStaticProps({
 }): Promise<{ props: HomeProps }> {
   const { slug } = params;
   const app = await fetchApp();
-  const categories = await fetchCategories();
+  const { tags } = await fetchTags();
+  const { authors } = await fetchAuthors();
+  const { archives } = await fetchArchives();
 
-  const category = categories.find((_category) => _category.slug === slug);
-  const { articles, total } = category
+  const tag = tags.find((_tag) => _tag.slug === slug);
+  const { articles, total } = tag
     ? await fetchArticles({
-        category: category._id,
+        tag: tag._id,
       })
     : { articles: [], total: 0 };
   return {
     props: {
       app,
-      categories,
+      tags,
+      authors,
+      archives,
       articles,
       total,
-      categorySlug: slug,
+      tagSlug: slug,
     },
   };
 }
 
 export async function getStaticPaths() {
-  const categories = await fetchCategories();
+  const { tags } = await fetchTags();
   return {
-    paths: categories.map((category) => ({
+    paths: tags.map((category) => ({
       params: {
         slug: category.slug,
       },
