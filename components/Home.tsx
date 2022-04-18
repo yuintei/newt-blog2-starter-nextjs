@@ -53,7 +53,7 @@ export function Home({
 
   const shouldDisplayCover = useMemo(() => {
     return app.cover?.value && !tagSlug && !authorSlug && !year;
-  }, [tagSlug, authorSlug, year]);
+  }, [app.cover?.value, tagSlug, authorSlug, year]);
 
   const headingText = useMemo(() => {
     if (currentTag) {
