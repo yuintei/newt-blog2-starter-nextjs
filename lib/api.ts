@@ -126,28 +126,26 @@ export const getPages = async (options?: {
 export const fetchCurrentArticle = async (options: { slug: string }) => {
   const { slug } = options;
   if (!slug) return null;
-  const { items } = await client.getContents<Content & Article>({
+  const article = await client.getFirstContent<Content & Article>({
     appUid: process.env.NEXT_PUBLIC_NEWT_APP_UID,
     modelUid: process.env.NEXT_PUBLIC_NEWT_ARTICLE_MODEL_UID,
     query: {
       depth: 2,
-      limit: 1,
       slug,
     },
   });
-  return items[0] || null;
+  return article;
 };
 
 export const fetchPreviousArticle = async (options: {
   createdAt: string;
 }): Promise<(Content & Article) | null> => {
   const { createdAt } = options;
-  const { items } = await client.getContents<Content & Article>({
+  const article = await client.getFirstContent<Content & Article>({
     appUid: process.env.NEXT_PUBLIC_NEWT_APP_UID,
     modelUid: process.env.NEXT_PUBLIC_NEWT_ARTICLE_MODEL_UID,
     query: {
       depth: 1,
-      limit: 1,
       select: ["slug"],
       order: ["-_sys.createdAt"],
       "_sys.createdAt": {
@@ -155,19 +153,18 @@ export const fetchPreviousArticle = async (options: {
       },
     },
   });
-  return items.length === 1 ? items[0] : null;
+  return article;
 };
 
 export const fetchNextArticle = async (options: {
   createdAt: string;
 }): Promise<(Content & Article) | null> => {
   const { createdAt } = options;
-  const { items } = await client.getContents<Content & Article>({
+  const article = await client.getFirstContent<Content & Article>({
     appUid: process.env.NEXT_PUBLIC_NEWT_APP_UID,
     modelUid: process.env.NEXT_PUBLIC_NEWT_ARTICLE_MODEL_UID,
     query: {
       depth: 1,
-      limit: 1,
       select: ["slug"],
       order: ["_sys.createdAt"],
       "_sys.createdAt": {
@@ -175,7 +172,7 @@ export const fetchNextArticle = async (options: {
       },
     },
   });
-  return items.length === 1 ? items[0] : null;
+  return article;
 };
 
 export const fetchAuthors = async () => {
@@ -210,17 +207,15 @@ export const fetchAuthors = async () => {
 
 export const fetchArchives = async () => {
   const archives: Archive[] = [];
-  const { items } = await client.getContents<Content & Article>({
+  const oldestArticle = await client.getFirstContent<Content & Article>({
     appUid: process.env.NEXT_PUBLIC_NEWT_APP_UID,
     modelUid: process.env.NEXT_PUBLIC_NEWT_ARTICLE_MODEL_UID,
     query: {
       depth: 1,
-      limit: 1,
       order: ["_sys.createdAt"],
       select: ["slug", "_sys.createdAt"],
     },
   });
-  const oldestArticle = items[0] || null;
   if (!oldestArticle) return { archives };
 
   let currentYear = new Date(
