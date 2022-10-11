@@ -9,7 +9,7 @@ export function Header({ app }: { app: AppMeta }): JSX.Element {
   const { q } = router.query;
   const searchRef = useRef<HTMLInputElement>();
 
-  const [searchText, setSearchText] = useState(q);
+  const [searchText, setSearchText] = useState(q || "");
 
   const focus = useCallback(() => {
     if (searchRef.current) {
