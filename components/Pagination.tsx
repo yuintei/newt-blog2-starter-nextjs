@@ -1,15 +1,15 @@
-import Link from "next/link";
-import styles from "../styles/Pagination.module.css";
-import { useMemo } from "react";
+import Link from 'next/link'
+import styles from '../styles/Pagination.module.css'
+import { useMemo } from 'react'
 
 export function Pagination({
   total = 0,
   current = 1,
-  basePath = "",
+  basePath = '',
 }: {
-  total?: number;
-  current?: number;
-  basePath?: string;
+  total?: number
+  current?: number
+  basePath?: string
 }) {
   const pages = useMemo(() => {
     return Array(
@@ -17,14 +17,14 @@ export function Pagination({
     )
       .fill({ number: 0, isCurrent: false })
       .map((value, index) => {
-        const pageNumber = index + 1;
+        const pageNumber = index + 1
         return {
           ...value,
           number: pageNumber,
           isCurrent: current === pageNumber,
-        };
-      });
-  }, [total, current]);
+        }
+      })
+  }, [total, current])
 
   return (
     <nav className={styles.Pagination}>
@@ -35,7 +35,7 @@ export function Pagination({
               <a
                 type="button"
                 className={`${styles.Pagination_Button} ${
-                  page.isCurrent ? styles._current : ""
+                  page.isCurrent ? styles._current : ''
                 }`}
               >
                 {page.number}
@@ -45,5 +45,5 @@ export function Pagination({
         ))}
       </ul>
     </nav>
-  );
+  )
 }

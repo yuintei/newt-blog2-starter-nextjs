@@ -1,4 +1,4 @@
 export interface Tag {
-  name: string;
-  slug: string;
+  name: string
+  slug: string
 }

@@ -1,33 +1,33 @@
-import { Home, HomeProps } from "../../../components/Home";
+import { Home, HomeProps } from '../../../components/Home'
 import {
   fetchApp,
   fetchArchives,
   fetchArticles,
   fetchAuthors,
   fetchTags,
-} from "../../../lib/api";
+} from '../../../lib/api'
 
 export default function CategoryPage(props: HomeProps) {
-  return <Home {...props} />;
+  return <Home {...props} />
 }
 
 export async function getStaticProps({
   params,
 }: {
-  params: { slug: string };
+  params: { slug: string }
 }): Promise<{ props: HomeProps }> {
-  const { slug } = params;
-  const app = await fetchApp();
-  const { tags } = await fetchTags();
-  const { authors } = await fetchAuthors();
-  const { archives } = await fetchArchives();
+  const { slug } = params
+  const app = await fetchApp()
+  const { tags } = await fetchTags()
+  const { authors } = await fetchAuthors()
+  const { archives } = await fetchArchives()
 
-  const tag = tags.find((_tag) => _tag.slug === slug);
+  const tag = tags.find((_tag) => _tag.slug === slug)
   const { articles, total } = tag
     ? await fetchArticles({
         tag: tag._id,
       })
-    : { articles: [], total: 0 };
+    : { articles: [], total: 0 }
   return {
     props: {
       app,
@@ -38,17 +38,17 @@ export async function getStaticProps({
       total,
       tagSlug: slug,
     },
-  };
+  }
 }
 
 export async function getStaticPaths() {
-  const { tags } = await fetchTags();
+  const { tags } = await fetchTags()
   return {
     paths: tags.map((category) => ({
       params: {
         slug: category.slug,
       },
     })),
-    fallback: "blocking",
-  };
+    fallback: 'blocking',
+  }
 }

@@ -1,5 +1,5 @@
-import Link from "next/link";
-import styles from "../styles/Error.module.css";
+import Link from 'next/link'
+import styles from '../styles/Error.module.css'
 
 function Error({ statusCode }) {
   return (
@@ -14,12 +14,12 @@ function Error({ statusCode }) {
         Back to the home page
       </Link>
     </div>
-  );
+  )
 }
 
 Error.getInitialProps = ({ res, err }) => {
-  const statusCode = res ? res.statusCode : err ? err.statusCode : 404;
-  return { statusCode };
-};
+  const statusCode = res ? res.statusCode : err ? err.statusCode : 404
+  return { statusCode }
+}
 
-export default Error;
+export default Error

@@ -1,5 +1,5 @@
-import styles from "../styles/Cover.module.css";
-import { AppMeta } from "newt-client-js";
+import styles from '../styles/Cover.module.css'
+import { AppMeta } from 'newt-client-js'
 
 export function Cover({ app }: { app: AppMeta }) {
   return (
@@ -9,5 +9,5 @@ export function Cover({ app }: { app: AppMeta }) {
     >
       &nbsp;
     </div>
-  );
+  )
 }
