@@ -1,19 +1,19 @@
-import { AppMeta, Content } from "newt-client-js";
-import styles from "../../styles/Article.module.css";
-import Head from "next/head";
-import { useCallback, useMemo } from "react";
-import { Layout } from "../../components/Layout";
+import { AppMeta, Content } from 'newt-client-js'
+import styles from '../../styles/Article.module.css'
+import Head from 'next/head'
+import { useCallback, useMemo } from 'react'
+import { Layout } from '../../components/Layout'
 import {
   fetchApp,
   fetchArticles,
   fetchCurrentArticle,
   fetchNextArticle,
   fetchPreviousArticle,
-} from "../../lib/api";
-import { formatDate } from "../../lib/date";
-import { Article } from "../../types/article";
-import { htmlToText } from "html-to-text";
-import Link from "next/link";
+} from '../../lib/api'
+import { formatDate } from '../../lib/date'
+import { Article } from '../../types/article'
+import { htmlToText } from 'html-to-text'
+import Link from 'next/link'
 
 export default function ArticlePage({
   app,
@@ -21,101 +21,101 @@ export default function ArticlePage({
   prevArticle,
   nextArticle,
 }: {
-  app: AppMeta;
-  currentArticle: (Content & Article) | null;
-  prevArticle: (Content & Article) | null;
-  nextArticle: (Content & Article) | null;
+  app: AppMeta
+  currentArticle: (Content & Article) | null
+  prevArticle: (Content & Article) | null
+  nextArticle: (Content & Article) | null
 }) {
   const meta = useMemo(() => {
     if (currentArticle?.meta) {
-      return currentArticle.meta;
+      return currentArticle.meta
     }
-    return null;
-  }, [currentArticle]);
+    return null
+  }, [currentArticle])
 
   const title = useMemo(() => {
     if (meta?.title) {
-      return meta.title;
+      return meta.title
     }
     if (currentArticle?.title) {
-      return currentArticle.title;
+      return currentArticle.title
     }
-    return app.name || app.uid || "";
-  }, [app, meta, currentArticle?.title]);
+    return app.name || app.uid || ''
+  }, [app, meta, currentArticle?.title])
 
   const description = useMemo(() => {
     if (meta?.description) {
-      return meta.description;
+      return meta.description
     }
     if (currentArticle?.body) {
       return htmlToText(currentArticle.body, {
-        selectors: [{ selector: "img", format: "skip" }],
-      }).slice(0, 200);
+        selectors: [{ selector: 'img', format: 'skip' }],
+      }).slice(0, 200)
     }
-    return "";
-  }, [meta, currentArticle?.body]);
+    return ''
+  }, [meta, currentArticle?.body])
 
   const ogImage = useMemo(() => {
     if (meta?.ogImage) {
-      return meta.ogImage.src;
+      return meta.ogImage.src
     }
     if (currentArticle?.author?.profileImage) {
-      return currentArticle.author.profileImage.src;
+      return currentArticle.author.profileImage.src
     }
-    return "";
-  }, [meta?.ogImage, currentArticle?.author]);
+    return ''
+  }, [meta?.ogImage, currentArticle?.author])
 
   const authorName = useMemo(() => {
-    return currentArticle?.author?.fullName || "NO NAME";
-  }, [currentArticle?.author?.fullName]);
+    return currentArticle?.author?.fullName || 'NO NAME'
+  }, [currentArticle?.author?.fullName])
 
   const publishDate = useMemo(() => {
     return currentArticle?._sys?.createdAt
       ? formatDate(currentArticle._sys.createdAt)
-      : "";
-  }, [currentArticle?._sys?.createdAt]);
+      : ''
+  }, [currentArticle?._sys?.createdAt])
 
   const body = useMemo(() => {
     if (currentArticle?.body) {
       return {
         __html: currentArticle.body,
-      };
+      }
     }
     return {
-      __html: "",
-    };
-  }, [currentArticle?.body]);
+      __html: '',
+    }
+  }, [currentArticle?.body])
 
   const authorBio = useMemo(() => {
     if (currentArticle?.author?.biography) {
       return {
         __html: currentArticle.author.biography,
-      };
+      }
     }
     return {
-      __html: "",
-    };
-  }, [currentArticle?.author?.biography]);
+      __html: '',
+    }
+  }, [currentArticle?.author?.biography])
 
   const shareOnTwitter = useCallback(() => {
     window.open(
-      "https://twitter.com/share?url=" +
+      'https://twitter.com/share?url=' +
         encodeURIComponent(window.location.href) +
-        "&text=" +
+        '&text=' +
         document.title,
-      "",
-      "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600"
-    );
-  }, []);
+      '',
+      'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600'
+    )
+  }, [])
 
   const shareOnFacebook = useCallback(() => {
     window.open(
-      "//www.facebook.com/sharer.php?src=bm&u=" +
+      '//www.facebook.com/sharer.php?src=bm&u=' +
         encodeURIComponent(location.href),
-      "_blank",
-      "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600"
-    );
-  }, []);
+      '_blank',
+      'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600'
+    )
+  }, [])
 
   return (
     <Layout app={app}>
@@ -321,19 +321,19 @@ export default function ArticlePage({
         </article>
       </main>
     </Layout>
-  );
+  )
 }
 
 export async function getStaticProps({ params }: { params: { slug: string } }) {
-  const { slug } = params;
-  const app = await fetchApp();
-  const currentArticle = await fetchCurrentArticle({ slug });
+  const { slug } = params
+  const app = await fetchApp()
+  const currentArticle = await fetchCurrentArticle({ slug })
   const prevArticle = currentArticle
     ? await fetchPreviousArticle({ createdAt: currentArticle._sys.createdAt })
-    : null;
+    : null
   const nextArticle = currentArticle
     ? await fetchNextArticle({ createdAt: currentArticle._sys.createdAt })
-    : null;
+    : null
 
   return {
     props: {
@@ -342,19 +342,19 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
       prevArticle,
       nextArticle,
     },
-  };
+  }
 }
 
 export async function getStaticPaths() {
   const { articles } = await fetchArticles({
     limit: 1000,
-  });
+  })
   return {
     paths: articles.map((article) => ({
       params: {
         slug: article.slug,
       },
     })),
-    fallback: "blocking",
-  };
+    fallback: 'blocking',
+  }
 }

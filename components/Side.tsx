@@ -1,18 +1,18 @@
-import { Content } from "newt-client-js";
-import { Tag } from "../types/tag";
-import styles from "../styles/Side.module.css";
-import Link from "next/link";
-import { Author } from "../types/author";
-import { Archive } from "../types/article";
+import { Content } from 'newt-client-js'
+import { Tag } from '../types/tag'
+import styles from '../styles/Side.module.css'
+import Link from 'next/link'
+import { Author } from '../types/author'
+import { Archive } from '../types/article'
 
 export function Side({
   popularTags,
   authors,
   archives,
 }: {
-  popularTags: (Content & Tag & { total: number })[];
-  authors: (Content & Author & { total: number })[];
-  archives: Archive[];
+  popularTags: (Content & Tag & { total: number })[]
+  authors: (Content & Author & { total: number })[]
+  archives: Archive[]
 }) {
   return (
     <aside className={styles.Side}>
@@ -116,5 +116,5 @@ export function Side({
         </ul>
       </div>
     </aside>
-  );
+  )
 }

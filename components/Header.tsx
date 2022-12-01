@@ -1,42 +1,42 @@
-import { AppMeta } from "newt-client-js";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { useCallback, useEffect, useRef, useState } from "react";
-import styles from "../styles/Header.module.css";
+import { AppMeta } from 'newt-client-js'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import styles from '../styles/Header.module.css'
 
 export function Header({ app }: { app: AppMeta }): JSX.Element {
-  const router = useRouter();
-  const { q } = router.query;
-  const searchRef = useRef<HTMLInputElement>();
+  const router = useRouter()
+  const { q } = router.query
+  const searchRef = useRef<HTMLInputElement>()
 
-  const [searchText, setSearchText] = useState(q || "");
+  const [searchText, setSearchText] = useState(q || '')
 
   const focus = useCallback(() => {
     if (searchRef.current) {
-      searchRef.current.focus();
+      searchRef.current.focus()
     }
-  }, [searchRef]);
+  }, [searchRef])
 
   useEffect(() => {
     if (q) {
-      setSearchText(q);
+      setSearchText(q)
     }
-  }, [q]);
+  }, [q])
 
   return (
     <header className={styles.Header}>
       <div className={styles.Header_Inner}>
         <Link href="/">
           <a href="#" className={styles.Title}>
-            {app.icon?.type === "emoji" && (
+            {app.icon?.type === 'emoji' && (
               <span className={styles.Title_Icon}>{app.icon.value}</span>
             )}
-            {app.icon?.type === "image" && (
+            {app.icon?.type === 'image' && (
               <span className={styles.Title_Icon}>
                 <img src={app.icon.value} alt="" />
               </span>
             )}
-            <div className={styles.Title_Text}>{app.name || app.uid || ""}</div>
+            <div className={styles.Title_Text}>{app.name || app.uid || ''}</div>
           </a>
         </Link>
         <div className={styles.Link}>
@@ -77,5 +77,5 @@ export function Header({ app }: { app: AppMeta }): JSX.Element {
         </div>
       </div>
     </header>
-  );
+  )
 }

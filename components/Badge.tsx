@@ -1,4 +1,4 @@
-import styles from "../styles/Badge.module.css";
+import styles from '../styles/Badge.module.css'
 
 export function Badge() {
   return (
@@ -11,5 +11,5 @@ export function Badge() {
       <img src="/logo.svg" alt="Newt" width="16" height="13" />
       <span className={styles.Badge_Text}>Made in Newt</span>
     </a>
-  );
+  )
 }

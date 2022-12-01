@@ -1,15 +1,15 @@
-import { AppMeta } from "newt-client-js";
-import { PropsWithChildren } from "react";
-import styles from "../styles/Layout.module.css";
-import { Badge } from "./Badge";
-import { Footer } from "./Footer";
-import { Header } from "./Header";
+import { AppMeta } from 'newt-client-js'
+import { PropsWithChildren } from 'react'
+import styles from '../styles/Layout.module.css'
+import { Badge } from './Badge'
+import { Footer } from './Footer'
+import { Header } from './Header'
 
 export function Layout({
   app,
   children,
 }: PropsWithChildren<{
-  app: AppMeta;
+  app: AppMeta
 }>): JSX.Element {
   return (
     <div className={styles.Wrapper}>
@@ -18,5 +18,5 @@ export function Layout({
       <Footer app={app} />
       <Badge />
     </div>
-  );
+  )
 }

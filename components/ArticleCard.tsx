@@ -1,14 +1,14 @@
-import Link from "next/link";
-import styles from "../styles/ArticleCard.module.css";
-import { formatDate } from "../lib/date";
-import { Content } from "newt-client-js";
-import { Article } from "../types/article";
-import { useMemo } from "react";
+import Link from 'next/link'
+import styles from '../styles/ArticleCard.module.css'
+import { formatDate } from '../lib/date'
+import { Content } from 'newt-client-js'
+import { Article } from '../types/article'
+import { useMemo } from 'react'
 
 export function ArticleCard({ article }: { article: Content & Article }) {
   const authorName = useMemo(() => {
-    return article.author?.fullName || "NO NAME";
-  }, [article]);
+    return article.author?.fullName || 'NO NAME'
+  }, [article])
 
   return (
     <Link href={`/article/${article.slug}`}>
@@ -70,5 +70,5 @@ export function ArticleCard({ article }: { article: Content & Article }) {
         </div>
       </a>
     </Link>
-  );
+  )
 }

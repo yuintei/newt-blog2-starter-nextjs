@@ -4,32 +4,32 @@ import {
   fetchArticles,
   fetchAuthors,
   fetchTags,
-} from "../../../lib/api";
-import { Home, HomeProps } from "../../../components/Home";
+} from '../../../lib/api'
+import { Home, HomeProps } from '../../../components/Home'
 
 export default function TopPage(props: HomeProps) {
-  return <Home {...props} />;
+  return <Home {...props} />
 }
 
 export async function getStaticProps({
   params,
 }: {
-  params: { slug: string };
-  redirect;
+  params: { slug: string }
+  redirect
 }): Promise<{ props: HomeProps }> {
-  const { slug } = params;
-  const app = await fetchApp();
-  const { tags } = await fetchTags();
-  const { authors } = await fetchAuthors();
-  const { archives } = await fetchArchives();
+  const { slug } = params
+  const app = await fetchApp()
+  const { tags } = await fetchTags()
+  const { authors } = await fetchAuthors()
+  const { archives } = await fetchArchives()
 
-  let year = Number(slug);
+  let year = Number(slug)
   if (Number.isNaN(year)) {
-    year = new Date().getFullYear();
+    year = new Date().getFullYear()
   }
   const { articles, total } = await fetchArticles({
     year,
-  });
+  })
 
   return {
     props: {
@@ -41,17 +41,17 @@ export async function getStaticProps({
       total,
       year,
     },
-  };
+  }
 }
 
 export async function getStaticPaths() {
-  const { archives } = await fetchArchives();
+  const { archives } = await fetchArchives()
   return {
     paths: archives.map((archive) => ({
       params: {
         slug: archive.year.toString(),
       },
     })),
-    fallback: "blocking",
-  };
+    fallback: 'blocking',
+  }
 }

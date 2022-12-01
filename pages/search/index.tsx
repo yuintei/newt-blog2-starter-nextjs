@@ -1,46 +1,46 @@
-import styles from "../../styles/Search.module.css";
-import { AppMeta, Content } from "newt-client-js";
-import Head from "next/head";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { useEffect, useMemo, useState } from "react";
-import { Layout } from "../../components/Layout";
-import { fetchApp, fetchArticles } from "../../lib/api";
-import { Article } from "../../types/article";
-import { htmlToText } from "html-to-text";
+import styles from '../../styles/Search.module.css'
+import { AppMeta, Content } from 'newt-client-js'
+import Head from 'next/head'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useEffect, useMemo, useState } from 'react'
+import { Layout } from '../../components/Layout'
+import { fetchApp, fetchArticles } from '../../lib/api'
+import { Article } from '../../types/article'
+import { htmlToText } from 'html-to-text'
 
 export default function Search({ app }: { app: AppMeta }) {
-  const router = useRouter();
-  const { q, page } = router.query;
+  const router = useRouter()
+  const { q, page } = router.query
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [articles, setArticles] = useState<(Content & Article)[]>([]);
-  const [total, setTotal] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState(false)
+  const [articles, setArticles] = useState<(Content & Article)[]>([])
+  const [total, setTotal] = useState<number>(0)
 
   const _page = useMemo(() => {
-    return Number(page) || 1;
-  }, [page]);
+    return Number(page) || 1
+  }, [page])
 
   useEffect(() => {
-    (async () => {
-      if (typeof q !== "string" || q === "") {
-        return;
+    ;(async () => {
+      if (typeof q !== 'string' || q === '') {
+        return
       }
       const { articles, total } = await fetchArticles({
         search: q,
         page: _page,
         limit: 100,
-      });
-      setArticles(articles);
-      setTotal(total);
-      setIsLoading(true);
-    })();
-  }, [q, _page, router]);
+      })
+      setArticles(articles)
+      setTotal(total)
+      setIsLoading(true)
+    })()
+  }, [q, _page, router])
 
   return (
     <Layout app={app}>
       <Head>
-        <title>{app?.name || app?.uid || ""}</title>
+        <title>{app?.name || app?.uid || ''}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.Container}>
@@ -57,7 +57,7 @@ export default function Search({ app }: { app: AppMeta }) {
                       <h1 className={styles.Article_Title}>{article.title}</h1>
                       <p className={styles.Article_Description}>
                         {htmlToText(article.body, {
-                          selectors: [{ selector: "img", format: "skip" }],
+                          selectors: [{ selector: 'img', format: 'skip' }],
                         })}
                       </p>
                     </a>
@@ -81,14 +81,14 @@ export default function Search({ app }: { app: AppMeta }) {
         )}
       </main>
     </Layout>
-  );
+  )
 }
 
 export async function getStaticProps() {
-  const app = await fetchApp();
+  const app = await fetchApp()
   return {
     props: {
       app,
     },
-  };
+  }
 }
