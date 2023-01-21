@@ -10,6 +10,7 @@
     "format": "prettier --write --ignore-path .gitignore './**/*.{js,jsx,ts,tsx,json,md}'"
   },
   "dependencies": {
+    "generate": "^0.14.0",
     "html-to-text": "^8.1.0",
     "luxon": "^2.5.2",
     "newt-client-js": "^3.1.0",
