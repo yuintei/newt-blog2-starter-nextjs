@@ -7,7 +7,6 @@
   height: 0;
   padding: 52.5% 0 0;
   position: relative;
-  border-radius: 4px;
   overflow: hidden;
   flex-shrink: 0;
   margin: 0 0 16px;
@@ -31,29 +30,25 @@
   padding: 0;
 }
 .Article_Tags {
-  margin: 0 0 16px 0;
+  margin: 0 0 8px 0;
   padding: 0;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
 }
 .Article_Tags li {
-  margin: 0 8px 8px 0;
+  margin: 0 8px 4px 0;
   padding: 0;
   list-style: none;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
 }
 .Article_Tags li a {
   color: #888;
-  border: 1px solid #ccc;
-  border-radius: 4px;
   text-decoration: none;
   display: inline-block;
-  padding: 0 8px;
-  transition: border 0.2s;
 }
 .Article_Tags li a:hover {
-  border: 1px solid #999;
+  text-decoration: underline;
 }
 .Article_Row {
   display: flex;
@@ -85,19 +80,18 @@
   flex: 1;
 }
 .Article_AuthorName {
-  font-weight: bold;
   display: block;
   line-height: 1.5;
-  color: #333;
+  color: #888;
   text-decoration: none;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
 }
 .Article_AuthorName:hover {
   text-decoration: underline;
 }
 .Article_Date {
   color: #888;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   line-height: 1.5;
   display: block;
 }
@@ -251,7 +245,7 @@
     height: 24px;
   }
   .Article_ShareList > li > button {
-    padding: 0 0 0 10px;
+    padding: 0 0 0 5px;
   }
 }
 .SnsShare {
@@ -261,7 +255,7 @@
 }
 .SnsShare_Label {
   color: #888;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   margin: 0 16px 0 0;
 }
 .SnsShare_List {
@@ -279,14 +273,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 8px;
+  padding: 0 5px;
   background: none;
   border: none;
   cursor: pointer;
 }
 .SnsShare_List > li > button > svg {
-  width: 28px;
-  height: 28px;
+  width: 25px;
+  height: 25px;
   transition: fill 0.2s;
 }
 .SnsShare_List > li > button:hover > svg {

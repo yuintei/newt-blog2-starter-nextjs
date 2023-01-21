@@ -33,6 +33,7 @@ export function ArticleCard({ article }: { article: Content & Article }) {
         </div>
         <div className={styles.Article_Data}>
           <h3 className={styles.Article_Title}>{article.title}</h3>
+          <div className={styles.Article_Summary}>{article.summary}</div>
           <ul className={styles.Article_Tags}>
             {article.tags.map((tag) => (
               <li key={tag._id}>#{tag.name}</li>

@@ -10,6 +10,7 @@ export interface Article {
     description: string
     ogImage: { src: string } | null
   }
+  summary: string
   body: string
   coverImage: { src: string } | null
   author: (Content & Author) | null

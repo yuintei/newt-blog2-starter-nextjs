@@ -135,7 +135,6 @@ export default function ArticlePage({
             <img src={currentArticle.coverImage.src} alt="" />
           </div>
           <div className={styles.Article_Header}>
-            <h1 className={styles.Article_Title}>{currentArticle.title}</h1>
             <ul className={styles.Article_Tags}>
               {currentArticle.tags.map((tag) => (
                 <li key={tag._id}>
@@ -145,6 +144,8 @@ export default function ArticlePage({
                 </li>
               ))}
             </ul>
+            <h1 className={styles.Article_Title}>{currentArticle.title}</h1>
+
             <div className={styles.Article_Row}>
               <div className={styles.Article_Author}>
                 <a href="#" className={styles.Article_Avatar}>
