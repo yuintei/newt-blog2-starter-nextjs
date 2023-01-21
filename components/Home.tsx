@@ -91,8 +91,8 @@ export function Home({
       <div className={styles.Container}>
         <div className={styles.Container_Inner}>
           <main className={styles.Articles}>
+            <h2 className={styles.Articles_Heading}>{headingText}</h2>
             <div className={styles.Articles_Inner}>
-              <h2 className={styles.Articles_Heading}>{headingText}</h2>
               {articles.map((article) => (
                 <ArticleCard key={article._id} article={article} />
               ))}
