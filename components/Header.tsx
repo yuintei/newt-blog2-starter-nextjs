@@ -39,15 +39,6 @@ export function Header({ app }: { app: AppMeta }): JSX.Element {
             <div className={styles.Title_Text}>{app.name || app.uid || ''}</div>
           </a>
         </Link>
-        <div className={styles.Link}>
-          <a
-            href="https://github.com/Newt-Inc/newt-blog2-starter-nextjs"
-            rel="noreferrer noopener"
-            target="_blank"
-          >
-            GitHub
-          </a>
-        </div>
         <div className={styles.Search}>
           <button
             type="button"

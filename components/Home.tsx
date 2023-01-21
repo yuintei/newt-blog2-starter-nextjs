@@ -65,7 +65,7 @@ export function Home({
     if (year) {
       return `Articles in ${year}`
     }
-    return 'Recent Articles'
+    return '最新記事'
   }, [currentTag, currentAuthor, year])
 
   const paginationBasePath = useMemo(() => {

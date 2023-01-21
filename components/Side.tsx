@@ -43,7 +43,8 @@ export function Side({
           ))}
         </ul>
       </div>
-      <div className={styles.Side_Row}>
+
+      {/* <div className={styles.Side_Row}>
         <h3 className={styles.Side_Heading}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -68,7 +69,8 @@ export function Side({
             </li>
           ))}
         </ul>
-      </div>
+      </div> */}
+
       <div className={styles.Side_Row}>
         <h3 className={styles.Side_Heading}>
           <svg

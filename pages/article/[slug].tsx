@@ -245,7 +245,8 @@ export default function ArticlePage({
               </li>
             </ul>
           </div>
-          <aside className={styles.Author}>
+
+          {/* <aside className={styles.Author}>
             <a href="#" className={styles.Author_Avatar}>
               {currentArticle.author?.profileImage?.src ? (
                 <img
@@ -276,7 +277,8 @@ export default function ArticlePage({
                 dangerouslySetInnerHTML={authorBio}
               ></div>
             </div>
-          </aside>
+          </aside> */}
+
           <nav className={styles.Links}>
             {prevArticle && (
               <Link href={`/article/${prevArticle.slug}`}>
