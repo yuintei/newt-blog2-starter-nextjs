@@ -10,7 +10,7 @@ export function Layout({
   app: AppMeta
 }>): JSX.Element {
   return (
-    <div className="font-sans">
+    <div className="font-sans text-slate-700">
       <Header app={app} />
       {children}
       <Footer app={app} />

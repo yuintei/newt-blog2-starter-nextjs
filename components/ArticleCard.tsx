@@ -31,11 +31,11 @@ export function ArticleCard({ article }: { article: Content & Article }) {
           )}
         </div>
         <div className="flex flex-col flex-auto">
-          <h3 className="text-xl sm:text-2xl mt-5 mb-3 font-bold hover:underline">
+          <h3 className="text-xl sm:text-2xl mt-5 mb-2 font-bold hover:underline">
             {article.title}
           </h3>
-          <div className=" mb-5 text-stripe">{article.summary}</div>
-          <ul className="flex flex-wrap mb-2">
+          <div className=" mb-3 text-slate-500">{article.summary}</div>
+          <ul className="flex flex-wrap">
             {article.tags.map((tag) => (
               <li key={tag._id} className="text-sm mr-4 mb-2 text-slate-400">
                 #{tag.name}
@@ -50,7 +50,7 @@ export function ArticleCard({ article }: { article: Content & Article }) {
                 className="w-8 h-8 flex-shrink-0"
               />
             ) : (
-              <div className="w-12 h-12 mr-4 bg-gray-100 flex items-center justify-center flex-shrink-0 rounded-full">
+              <div className="w-10 h-10 mr-4 bg-gray-100 flex items-center justify-center flex-shrink-0 rounded-full">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="20px"
