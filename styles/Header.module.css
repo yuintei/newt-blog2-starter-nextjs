@@ -16,7 +16,7 @@
   align-items: center;
   position: relative;
 }
-@media (min-width: 600px) {
+@media (min-width: 768px) {
   .Header {
     padding: 8px 40px;
   }

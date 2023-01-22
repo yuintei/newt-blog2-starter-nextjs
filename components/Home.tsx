@@ -88,7 +88,7 @@ export function Home({
       </Head>
       {shouldDisplayCover && <Cover app={app} />}
       <div className="py-5 md:py-10 px-5 md:px-10">
-        <div className="block mx-auto md:max-w-5xl md:flex md:justify-center">
+        <div className="block mx-auto max-w-2xl">
           <main className="flex-1 md:mr-10 max-w-5xl">
             <h2 className="text-xl md:text-2xl pb-5 font-bold">
               {headingText}
