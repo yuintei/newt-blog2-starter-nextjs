@@ -87,7 +87,7 @@ export function Home({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {shouldDisplayCover && <Cover app={app} />}
-      <div className="pt-20 pb-5 px-5 md:px-10">
+      <div className="py-5 md:py-10 px-5 md:px-10">
         <div className="block mx-auto md:max-w-5xl md:flex md:justify-center">
           <main className="flex-1 md:mr-10 max-w-5xl">
             <h2 className="text-xl md:text-2xl pb-5 font-bold">
