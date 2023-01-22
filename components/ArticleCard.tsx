@@ -11,7 +11,7 @@ export function ArticleCard({ article }: { article: Content & Article }) {
 
   return (
     <Link href={`/article/${article.slug}`}>
-      <a className="flex flex-col overflow-hidden w-ful mb-10 hover:bg-slate-50 active:bg-none">
+      <a className="flex flex-col overflow-hidden w-ful mb-10 active:bg-none">
         <div className="w-full object-cover">
           {article.coverImage ? (
             <img src={article.coverImage.src} alt="" />
