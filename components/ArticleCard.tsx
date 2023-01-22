@@ -37,7 +37,7 @@ export function ArticleCard({ article }: { article: Content & Article }) {
       </Link>
       <div className="flex flex-col flex-auto">
         <Link href={`/article/${article.slug}`}>
-          <a className="text-xl md:text-2xl mt-5 mb-2 font-bold hover:underline">
+          <a className="text-xl md:text-2xl mt-5 mb-2 font-bold md:hover:underline">
             {article.title}
           </a>
         </Link>

@@ -32,7 +32,7 @@ export function Side({
           {popularTags.map((tag) => (
             <li key={tag._id} className="mr-2 mb-1">
               <Link href={`/tag/${tag.slug}`}>
-                <a className="inline-block text-sm text-slate-500 hover:underline">
+                <a className="inline-block text-sm text-slate-500 md:hover:underline">
                   {tag.name} ({tag.total})
                 </a>
               </Link>
