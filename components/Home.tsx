@@ -1,6 +1,5 @@
 import { AppMeta, Content } from 'newt-client-js'
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
 import { Cover } from '../components/Cover'
 import { Layout } from '../components/Layout'
 import { Tag } from '../types/tag'
@@ -88,11 +87,11 @@ export function Home({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {shouldDisplayCover && <Cover app={app} />}
-      <div className={styles.Container}>
-        <div className={styles.Container_Inner}>
-          <main className={styles.Articles}>
-            <h2 className={styles.Articles_Heading}>{headingText}</h2>
-            <div className={styles.Articles_Inner}>
+      <div className="py-10 px-5 sm:px-20">
+        <div className="block mx-auto sm:max-w-5xl sm:flex sm:justify-center">
+          <main className="flex-1 sm:mr-20 max-w-5xl">
+            <h2 className="text-3xl pb-10 font-bold">{headingText}</h2>
+            <div className="flex flex-wrap">
               {articles.map((article) => (
                 <ArticleCard key={article._id} article={article} />
               ))}

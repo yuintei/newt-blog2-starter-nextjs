@@ -23,7 +23,7 @@
   margin: 0 0 60px 0;
 }
 .Article_Title {
-  font-size: 2.4rem;
+  font-size: 1.6rem;
   line-height: 1.5;
   font-weight: bold;
   margin: 0 0 16px 0;
@@ -40,7 +40,7 @@
   margin: 0 8px 4px 0;
   padding: 0;
   list-style: none;
-  font-size: 1.4rem;
+  font-size: 1rem;
 }
 .Article_Tags li a {
   color: #888;
@@ -84,14 +84,14 @@
   line-height: 1.5;
   color: #888;
   text-decoration: none;
-  font-size: 1.2rem;
+  font-size: 0.8rem;
 }
 .Article_AuthorName:hover {
   text-decoration: underline;
 }
 .Article_Date {
   color: #888;
-  font-size: 1.2rem;
+  font-size: 0.8rem;
   line-height: 1.5;
   display: block;
 }
@@ -103,7 +103,7 @@
 }
 .Article_ShareLabel {
   color: #888;
-  font-size: 1.2rem;
+  font-size: 0.8rem;
   margin: 0 2px 0 0;
   line-height: 1;
 }
@@ -149,24 +149,25 @@
   padding: 0;
   margin: 40px 0 24px 0;
   line-height: 1.4;
+  font-weight: bold;
 }
 .Article_Body h1 {
-  font-size: 2.4rem;
-}
-.Article_Body h2 {
-  font-size: 2.2rem;
-}
-.Article_Body h3 {
-  font-size: 2rem;
-}
-.Article_Body h4 {
-  font-size: 1.8rem;
-}
-.Article_Body h5 {
   font-size: 1.6rem;
 }
-.Article_Body h6 {
+.Article_Body h2 {
   font-size: 1.4rem;
+}
+.Article_Body h3 {
+  font-size: 1.2rem;
+}
+.Article_Body h4 {
+  font-size: 1rem;
+}
+.Article_Body h5 {
+  font-size: 0.8rem;
+}
+.Article_Body h6 {
+  font-size: 0.6rem;
 }
 .Article_Body p {
   margin: 0 0 24px 0;
@@ -181,6 +182,12 @@
 .Article_Body ol {
   margin: 0;
   padding: 0 0 16px 40px;
+}
+.Article_Body ul {
+  list-style-type: decimal;
+}
+.Article_Body ol {
+  list-style-type: disc;
 }
 .Article_Body ul li,
 .Article_Body ol li {
@@ -204,7 +211,7 @@
   border-radius: 4px;
   padding: 16px 20px;
   margin: 0 0 20px 0;
-  font-size: 1.4rem;
+  font-size: 1rem;
   line-height: 1.6;
   overflow: auto;
   font-family: 'Segoe UI Emoji', 'Helvetica Neue', Arial,
@@ -217,7 +224,7 @@
   padding: 2px 4px;
   margin: 0 4px;
   color: #e01d5a;
-  font-size: 1.4rem;
+  font-size: 1rem;
   font-family: 'Segoe UI Emoji', 'Helvetica Neue', Arial,
     'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
 }
@@ -231,7 +238,7 @@
 }
 @media (min-width: 600px) {
   .Article {
-    max-width: 700px;
+    max-width: 800px;
     padding: 60px;
   }
   .Article_Cover {
@@ -255,7 +262,7 @@
 }
 .SnsShare_Label {
   color: #888;
-  font-size: 1.2rem;
+  font-size: 0.8rem;
   margin: 0 16px 0 0;
 }
 .SnsShare_List {
@@ -317,7 +324,7 @@
   padding: 0;
   font-weight: bold;
   line-height: 1.5;
-  font-size: 1.6rem;
+  font-size: 1rem;
   color: #333;
   text-decoration: none;
 }
@@ -328,7 +335,7 @@
   margin: 0;
   padding: 0;
   line-height: 1.5;
-  font-size: 1.2rem;
+  font-size: 0.8rem;
 }
 .Author_Description p {
   margin: 0;
@@ -354,7 +361,7 @@
   align-items: center;
   color: #333;
   text-decoration: none;
-  font-size: 1.4rem;
+  font-size: 1rem;
   line-height: 1.6;
 }
 .Links_Previous:hover,

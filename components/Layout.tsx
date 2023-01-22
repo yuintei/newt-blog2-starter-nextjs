@@ -1,6 +1,5 @@
 import { AppMeta } from 'newt-client-js'
 import { PropsWithChildren } from 'react'
-import styles from '../styles/Layout.module.css'
 import { Footer } from './Footer'
 import { Header } from './Header'
 
@@ -11,7 +10,7 @@ export function Layout({
   app: AppMeta
 }>): JSX.Element {
   return (
-    <div className={styles.Wrapper}>
+    <div className="font-sans">
       <Header app={app} />
       {children}
       <Footer app={app} />

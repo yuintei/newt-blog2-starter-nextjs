@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import styles from '../styles/ArticleCard.module.css'
 import { formatDate } from '../lib/date'
 import { Content } from 'newt-client-js'
 import { Article } from '../types/article'
@@ -12,12 +11,12 @@ export function ArticleCard({ article }: { article: Content & Article }) {
 
   return (
     <Link href={`/article/${article.slug}`}>
-      <a className={styles.Article}>
-        <div className={styles.Article_Eyecatch}>
+      <a className="flex flex-col overflow-hidden w-ful mb-10 hover:bg-slate-50 active:bg-none">
+        <div className="w-full object-cover">
           {article.coverImage ? (
             <img src={article.coverImage.src} alt="" />
           ) : (
-            <div className={styles.Article_EyecatchEmpty}>
+            <div className="bg-gray-100 h-40 w-100 flex items-center justify-center ">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="40px"
@@ -31,24 +30,27 @@ export function ArticleCard({ article }: { article: Content & Article }) {
             </div>
           )}
         </div>
-        <div className={styles.Article_Data}>
-          <h3 className={styles.Article_Title}>{article.title}</h3>
-          <div className={styles.Article_Summary}>{article.summary}</div>
-          <ul className={styles.Article_Tags}>
+        <div className="flex flex-col flex-auto">
+          <h3 className="text-xl sm:text-2xl mt-5 mb-3 font-bold hover:underline">
+            {article.title}
+          </h3>
+          <div className=" mb-5 text-stripe">{article.summary}</div>
+          <ul className="flex flex-wrap mb-2">
             {article.tags.map((tag) => (
-              <li key={tag._id}>#{tag.name}</li>
+              <li key={tag._id} className="text-sm mr-4 mb-2 text-slate-400">
+                #{tag.name}
+              </li>
             ))}
           </ul>
-          <div className={styles.Article_Author}>
+          <div className="flex items-center">
             {article.author?.profileImage ? (
               <img
                 src={article.author.profileImage.src}
                 alt=""
-                width="32"
-                height="32"
+                className="w-8 h-8 flex-shrink-0"
               />
             ) : (
-              <div className={styles.Article_AuthorEmpty}>
+              <div className="w-12 h-12 mr-4 bg-gray-100 flex items-center justify-center flex-shrink-0 rounded-full">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="20px"
@@ -61,9 +63,12 @@ export function ArticleCard({ article }: { article: Content & Article }) {
                 </svg>
               </div>
             )}
-            <div className={styles.Article_AuthorData}>
-              <span>{authorName}</span>
-              <time dateTime={formatDate(article._sys.createdAt)}>
+            <div className="flex-1">
+              <span className="text-sm block text-slate-400">{authorName}</span>
+              <time
+                dateTime={formatDate(article._sys.createdAt)}
+                className="text-sm block text-slate-400"
+              >
                 {formatDate(article._sys.createdAt)}
               </time>
             </div>
