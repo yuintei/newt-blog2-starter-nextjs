@@ -16,7 +16,7 @@ export function ArticleCard({ article }: { article: Content & Article }) {
           {article.coverImage ? (
             <img src={article.coverImage.src} alt="" />
           ) : (
-            <div className="bg-gray-100 h-40 w-100 flex items-center justify-center ">
+            <div className="h-40 w-100 flex items-center justify-center ">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="40px"
