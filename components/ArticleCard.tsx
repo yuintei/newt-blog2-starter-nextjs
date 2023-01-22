@@ -10,13 +10,17 @@ export function ArticleCard({ article }: { article: Content & Article }) {
   }, [article])
 
   return (
-    <Link href={`/article/${article.slug}`}>
-      <a className="flex flex-col w-ful mb-10">
-        <div className="w-full object-cover">
+    <div className="flex flex-col w-ful mb-10">
+      <Link href={`/article/${article.slug}`}>
+        <a className="w-full max-h-60">
           {article.coverImage ? (
-            <img src={article.coverImage.src} alt="" />
+            <img
+              className="w-full h-full object-cover"
+              src={article.coverImage.src}
+              alt=""
+            />
           ) : (
-            <div className="h-40 w-100 flex items-center justify-center ">
+            <div className="bg-gray-100 h-40 w-100 flex items-center justify-center ">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="40px"
@@ -29,52 +33,54 @@ export function ArticleCard({ article }: { article: Content & Article }) {
               </svg>
             </div>
           )}
-        </div>
-        <div className="flex flex-col flex-auto">
-          <h3 className="text-xl sm:text-2xl mt-5 mb-2 font-bold hover:underline">
+        </a>
+      </Link>
+      <div className="flex flex-col flex-auto">
+        <Link href={`/article/${article.slug}`}>
+          <a className="text-xl sm:text-2xl mt-5 mb-2 font-bold hover:underline">
             {article.title}
-          </h3>
-          <div className=" mb-3 text-slate-500">{article.summary}</div>
-          <ul className="flex flex-wrap">
-            {article.tags.map((tag) => (
-              <li key={tag._id} className="text-sm mr-4 mb-2 text-slate-400">
-                #{tag.name}
-              </li>
-            ))}
-          </ul>
-          <div className="flex items-center">
-            {article.author?.profileImage ? (
-              <img
-                src={article.author.profileImage.src}
-                alt=""
-                className="w-8 h-8 flex-shrink-0"
-              />
-            ) : (
-              <div className="w-10 h-10 mr-4 bg-gray-100 flex items-center justify-center flex-shrink-0 rounded-full">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20px"
-                  height="20px"
-                  viewBox="0 0 24 24"
-                  fill="#CCCCCC"
-                >
-                  <path d="M0 0h24v24H0V0z" fill="none" />
-                  <path d="M12 6c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2m0 10c2.7 0 5.8 1.29 6 2H6c.23-.72 3.31-2 6-2m0-12C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 10c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                </svg>
-              </div>
-            )}
-            <div className="flex-1">
-              <span className="text-sm block text-slate-400">{authorName}</span>
-              <time
-                dateTime={formatDate(article._sys.createdAt)}
-                className="text-sm block text-slate-400"
+          </a>
+        </Link>
+        <div className=" mb-3 text-slate-500">{article.summary}</div>
+        <ul className="flex flex-wrap">
+          {article.tags.map((tag) => (
+            <li key={tag._id} className="text-sm mr-4 mb-2 text-slate-400">
+              #{tag.name}
+            </li>
+          ))}
+        </ul>
+        <div className="flex items-center">
+          {article.author?.profileImage ? (
+            <img
+              src={article.author.profileImage.src}
+              alt=""
+              className="w-8 h-8 flex-shrink-0"
+            />
+          ) : (
+            <div className="w-10 h-10 mr-4 bg-gray-100 flex items-center justify-center flex-shrink-0 rounded-full">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20px"
+                height="20px"
+                viewBox="0 0 24 24"
+                fill="#CCCCCC"
               >
-                {formatDate(article._sys.createdAt)}
-              </time>
+                <path d="M0 0h24v24H0V0z" fill="none" />
+                <path d="M12 6c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2m0 10c2.7 0 5.8 1.29 6 2H6c.23-.72 3.31-2 6-2m0-12C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 10c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+              </svg>
             </div>
+          )}
+          <div className="flex-1">
+            <span className="text-sm block text-slate-400">{authorName}</span>
+            <time
+              dateTime={formatDate(article._sys.createdAt)}
+              className="text-sm block text-slate-400"
+            >
+              {formatDate(article._sys.createdAt)}
+            </time>
           </div>
         </div>
-      </a>
-    </Link>
+      </div>
+    </div>
   )
 }
