@@ -46,9 +46,7 @@ export default function Search({ app }: { app: AppMeta }) {
       <main className={styles.Container}>
         {articles.length > 0 ? (
           <div className={styles.Search}>
-            <p className={styles.Search_Text}>
-              Found {total} results for your search
-            </p>
+            <p className={styles.Search_Text}>{total} 件が見つかりました。</p>
             <div className={styles.Search_Results}>
               {articles.map((article) => (
                 <article key={article._id} className={styles.Article}>

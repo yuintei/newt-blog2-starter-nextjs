@@ -20,7 +20,7 @@ export function Side({
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
-            className="w-6 h-6 mr-4"
+            className="w-5 h-5 mr-2"
           >
             <path d="M0 0h24v24H0V0z" fill="none" />
             <path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58s1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM13 20.01L4 11V4h7v-.01l9 9-7 7.02z" />
@@ -28,11 +28,11 @@ export function Side({
           </svg>
           人気のタグ
         </h3>
-        <ul className="flex flex-wrap">
+        <ul className="flex flex-wrap ml-6">
           {popularTags.map((tag) => (
-            <li key={tag._id} className=" ml-10 mr-4 mb-1">
+            <li key={tag._id} className="mr-2 mb-1">
               <Link href={`/tag/${tag.slug}`}>
-                <a className="no-underline inline-block text-slate-500 hover:underline">
+                <a className="inline-block text-sm text-slate-500 hover:underline">
                   {tag.name} ({tag.total})
                 </a>
               </Link>
