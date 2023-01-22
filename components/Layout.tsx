@@ -11,7 +11,6 @@ export function Layout({
 }>): JSX.Element {
   return (
     <div>
-      <Header app={app} />
       {children}
       <Footer app={app} />
     </div>
